@@ -57,12 +57,20 @@
     (catch Exception e (println e) nil)))
 
 
+(defn make-tweet-wrapper
+  [id tweet]
+  (loop [t-id id t-content tweet tries 10]
+    (let [response (make-tweet t-id t-content)]
+      (if (or response (not (< 0 tries )))
+        response
+        (recur t-id t-content (dec tries))))))
+
 (defn reply-cycle
   [coll]
   (loop [id nil tweets-left coll]
     (when (seq tweets-left)
       (recur
-       (make-tweet id (first tweets-left))
+       (make-tweet-wrapper id (first tweets-left))
        (rest tweets-left)))))
 
 
