@@ -8,7 +8,8 @@
                  [adamwynne/feedparser-clj "0.5.2"]
                  [twitter-api "1.8.0"]
                  [hickory "0.7.1"]
-                 [environ "1.2.0"]]
+                 [environ "1.2.0"]
+                 [http-kit "2.5.1"]]
   :plugins [[lein-environ "1.2.0"]]
   :main ^:skip-aot stallmannotes.core
   :target-path "target/%s"

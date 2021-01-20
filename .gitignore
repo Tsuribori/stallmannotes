@@ -13,3 +13,8 @@ pom.xml.asc
 .hg/
 .lein-env
 .env
+terraform/variables.tfvars
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+.terraform.*

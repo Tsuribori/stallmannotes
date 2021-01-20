@@ -29,15 +29,16 @@
 (defn get-content [coll] (first (:content coll)))
 
 (defn process-node ;; Get node contents
-  [node] 
+  [node]
   (case (:tag node)
     :a (format "%s (%s)" (get-content node) (get-in node [:attrs :href])) ;; Link
     nil node ;; No node, just text
-    (get-content node))) ;; Anything else, eg em.
+    (format "%s" (get-content node)))) ;; Anything else, eg em.
 
 
 (defn split-space [seq] (str/split seq #" "))
 (defn replace-whitespace [seq] (str/replace seq #"\s+" " "))
+(defn remove-star [seq] (str/replace seq #"\*" "")) ;; Twitter seems to filter all posts with '*' character
 
 (defn strip-whitespace ;; This is very messy
   [seq]
@@ -46,6 +47,7 @@
    (clojure.string/join "")
    str/trim
    replace-whitespace
+   remove-star
    split-space
    (filter #(not (clojure.string/blank? %))) 
    (clojure.string/join " ")))

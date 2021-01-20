@@ -45,7 +45,7 @@
 (defn make-tweet
   [reply-id tweet]
   (println tweet)
-  (Thread/sleep 10000)
+  (Thread/sleep 1000)
   (try
     (if reply-id
       (get-id (rest/statuses-update :oauth-creds my-creds
@@ -59,7 +59,7 @@
 
 (defn make-tweet-wrapper
   [id tweet]
-  (loop [t-id id t-content tweet tries 10]
+  (loop [t-id id t-content tweet tries 3]
     (let [response (make-tweet t-id t-content)]
       (if (or response (not (< 0 tries )))
         response
