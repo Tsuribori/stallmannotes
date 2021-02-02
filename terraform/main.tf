@@ -21,7 +21,7 @@ resource "google_cloud_run_service" "stallman-srv" {
   template {
     spec {
       containers {
-        image = "gcr.io/${var.project_name}/stallmannotes:latest"
+        image = "gcr.io/${var.project_name}/stallmannotes:${var.image_tag}"
         env {
             name = "CONSUMER_KEY"
             value = var.consumer_key
@@ -50,6 +50,8 @@ resource "google_cloud_run_service" "stallman-srv" {
     latest_revision = true
   }
 
+  autogenerate_revision_name = true
+
   depends_on = [google_project_service.run]
  
  }
@@ -74,13 +76,13 @@ resource "google_app_engine_application" "app" {
 resource "google_cloud_scheduler_job" "stallman-trigger" {
   name             = "stallman-trigger"
   description      = "Run program once a day"
-  schedule         = "0 2 * * *"
-  time_zone        = "UTC"
+  schedule         = "0 23 * * *"
+  time_zone        = "EET"
   attempt_deadline = "320s"
 
   http_target {
     http_method = "GET"
-      uri = google_cloud_run_service.stallman-srv.status[0].url
+      uri = "${google_cloud_run_service.stallman-srv.status[0].url}/run"
       oidc_token {
       service_account_email = google_service_account.service_account.email
     }

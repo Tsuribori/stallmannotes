@@ -9,7 +9,8 @@
                  [twitter-api "1.8.0"]
                  [hickory "0.7.1"]
                  [environ "1.2.0"]
-                 [http-kit "2.5.1"]]
+                 [http-kit "2.5.1"]
+                 [compojure "1.6.2"]                 ]
   :plugins [[lein-environ "1.2.0"]]
   :main ^:skip-aot stallmannotes.core
   :target-path "target/%s"

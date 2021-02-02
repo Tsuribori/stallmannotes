@@ -14,7 +14,7 @@
 
 (defn to-hours
   [milsec]
-  (/ milsec 1000 60 60))
+  (int (/ milsec 1000 60 60)))
 
 (defn get-date
   [seq]
@@ -23,7 +23,7 @@
 (defn was-yesterday?
   [seq]
   (<
-   (to-hours (- (get-date seq) (now)))
+   (to-hours (- (now) (get-date seq)))
    24))
 
 (defn get-content [coll] (first (:content coll)))
@@ -83,4 +83,5 @@
 
 (defn post-content
   []
+  (println "Fetching feed...")
   (doall (map tweet/post-to-twitter (get-feed-content))))
